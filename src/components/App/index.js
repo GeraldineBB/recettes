@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route, Switch } from 'react-router-dom';
 
 import Menu from 'src/components/Menu';
 import Home from 'src/components/Home';
-// import Recipe from 'src/components/Recipe';
-// import Error from 'src/components/Error';
+import Recipe from 'src/components/Recipe';
+import Error from 'src/components/Error';
 
 import Loading from './Loading';
 
@@ -16,8 +17,23 @@ function App(props) {
   }
   return (
     <div className="app">
-      <Menu />
-      <Home />
+
+      <Switch>
+        <Route path="/" exact>
+          <Menu />
+          <Home />
+        </Route>
+
+        <Route path="/recipe/:slug" exact>
+          <Recipe />
+        </Route>
+
+        <Route>
+          <Error />
+        </Route>
+
+      </Switch>
+
       {/* <Recipe /> */}
       {/* <Error /> */}
     </div>
