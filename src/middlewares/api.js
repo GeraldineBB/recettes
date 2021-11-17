@@ -3,7 +3,7 @@ import axios from 'axios';
 const apiMiddleWare = (store) => (next) => (action) => {
   switch (action.type) {
     case 'LOAD': {
-      axios.get('http://localhost:3001/login', {
+      axios.get('http://localhost:3001/recipes', {
         // email: emailValue,
         // password: passwordValue,
       }).then(
@@ -11,10 +11,10 @@ const apiMiddleWare = (store) => (next) => (action) => {
           console.log(response.data);
 
           // dispatch d'une action enregistrer le pseudo
-          store.dispatch({ type: 'SET_CURRENT_USER', value: response.data.pseudo });
+          // store.dispatch({ type: 'SET_CURRENT_USER', value: response.data.pseudo });
         },
       ).catch(
-        (error) => console.log(error),
+        (error) => console.log('on a une erreur', error),
       );
 
       next(action);

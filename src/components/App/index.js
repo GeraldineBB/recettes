@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import Menu from 'src/components/Menu';
 import Home from 'src/components/Home';
@@ -15,6 +16,15 @@ function App(props) {
   if (props.loading) {
     return <Loading />;
   }
+
+  const dispatch = useDispatch();
+  useEffect(
+    () => {
+      dispatch({ type: 'LOAD' });
+    },
+    [],
+  );
+
   return (
     <div className="app">
 
