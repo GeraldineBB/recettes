@@ -4,6 +4,8 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { findRecipe } from 'src/selectors/recipes';
+
 // == Import : local
 // Composants
 import Page from 'src/components/Page';
@@ -12,14 +14,12 @@ import Header from './Header';
 import Ingredients from './Ingredients';
 import Instructions from './Instructions';
 
-import { findRecipe } from 'src/selectors/recipes';
-
 // Style
 import './style.scss';
 
 // == Composant
 function Recipe() {
-  const recipe = useSelector(state => findRecipe(state.recipes.list, 'crepes-raffinees'));
+  const recipe = useSelector((state) => findRecipe(state.recipes.list, 'crepes-raffinees'));
 
   if (!recipe) {
     return <Redirect to="/error" />;
