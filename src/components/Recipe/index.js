@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 // == Import : npm
 import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { findRecipe } from 'src/selectors/recipes';
@@ -19,31 +19,35 @@ import './style.scss';
 
 // == Composant
 function Recipe() {
-  // const dispatch = useDispatch();
-  // useEffect(
-  //   () => {
-  //     dispatch({ type: 'LOAD' });
-  //   },
-  // );
+  const dispatch = useDispatch();
+  useEffect(
+    () => {
+      dispatch({ type: 'LOAD' });
+    },
+  );
   // const list = useSelector((state) => state.recipes.list);
   // console.log('list recipe', list);
 
   // récupération du slug
-  const slug = () => {
-    const list = useSelector((state) => state.recipes.list);
+  // const slug = () => {
+  //   const list = useSelector((state) => state.recipes.list);
 
-    list.map(
-      (recipe) => {
-        console.log(recipe.slug);
-        const { slug } = recipe;
-        console.log(slug);
-        return { slug };
-      },
-    );
-  };
-  console.log(slug());
+  //   list.map(
+  //     (recipe) => {
+  //       console.log(recipe.slug);
+  //       const { slug } = recipe;
+  //       console.log(slug);
+  //       return { slug };
+  //     },
+  //   );
+  // };
+  // console.log(slug());
 
-  const recipe = useSelector((state) => findRecipe(state.recipes.list, slug()));
+  const { slug } = useParams();
+
+  const recipe = useSelector((state) => findRecipe(state.recipes.list, slug));
+
+  console.log(recipe);
 
   if (!recipe) {
     return <Redirect to="/error" />;
