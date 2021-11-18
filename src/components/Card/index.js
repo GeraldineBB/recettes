@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -16,10 +15,10 @@ const Card = ({
       <h2 className="card-title">{title}</h2>
       <p className="card-desc">Difficulté : {difficulty}</p>
       <Link to={`/recipe/${slug}`} className="card-link">Voir la recette</Link>
-
     </div>
   </article>
 );
+
 Card.propTypes = {
   thumbnail: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

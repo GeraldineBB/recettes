@@ -1,15 +1,14 @@
 /* eslint-disable arrow-body-style */
 // == Import : npm
-import React, { useEffect } from 'react';
-import { useParams, Redirect } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { findRecipe } from 'src/selectors/recipes';
+import { useParams, Navigate } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // == Import : local
 // Composants
 import Page from 'src/components/Page';
 import AppHeader from 'src/components/AppHeader';
+import { findRecipe } from 'src/selectors/recipes';
 import Header from './Header';
 import Ingredients from './Ingredients';
 import Instructions from './Instructions';
@@ -19,13 +18,12 @@ import './style.scss';
 
 // == Composant
 function Recipe() {
-  // affectation par destructuraion
   const { slug } = useParams();
 
   const recipe = useSelector((state) => findRecipe(state.recipes.list, slug));
 
   if (!recipe) {
-    return <Redirect to="/error" />;
+    return <Navigate to="/error" replace />;
   }
   return (
     <Page>

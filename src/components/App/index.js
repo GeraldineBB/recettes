@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation, Route, Switch } from 'react-router-dom';
+import { useLocation, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import Menu from 'src/components/Menu';
@@ -39,25 +39,21 @@ function App(props) {
 
   return (
     <div className="app">
-
-      <Switch>
-        <Route path="/" exact>
-          <Menu />
-          <Home />
-        </Route>
-
-        <Route path="/recipe/:slug" exact>
-          <Recipe />
-        </Route>
-
-        <Route>
-          <Error />
-        </Route>
-
-      </Switch>
-
-      {/* <Recipe /> */}
-      {/* <Error /> */}
+      <Menu />
+      {
+        // le composant Routes englobe des composants Route
+        // Comme le Switch, le composant Routes ne rend qu'une des routes qu'il contient
+        // Contrairement au Switch, il choisit la route la plus approprié
+        // Par exemple, pour une url /post/add, la route de path /post/add sera préférée
+        // à la route paramétrable /post/:postId sui matche pourtant mais qui est moins précise
+        // et ceux, même si cette dernière est en première position
+        // on peut voir ça si dessous avec la route en path *
+      }
+      <Routes>
+        <Route path="*" element={<Error />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/recipe/:slug" element={<Recipe />} />
+      </Routes>
     </div>
   );
 }
