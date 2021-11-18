@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -9,20 +9,32 @@ const Menu = () => {
   const recipes = useSelector((state) => state.recipes.list);
   return (
     <nav className="menu">
-      <a
-        className="menu-link menu-link--active"
-        href="/"
+      <NavLink
+        to="/"
+        className={
+          // on peut passer à className (ou à style)
+          // un callback qui prend en paramère isActive (le lien est il actif ou pas)
+          // et qui doit retourner la classe (restectivement le style) ) appliquer
+          ({ isActive }) => (
+            isActive ? 'menu-link menu-link--active' : 'menu-link'
+          )
+        }
       >
         Accueil
-      </a>
+      </NavLink>
+
       {recipes.map((recipe) => (
-        <a
+        <NavLink
           key={recipe.id}
-          className="menu-link"
-          href={`/recipe/${recipe.slug}`}
+          to={`/recipe/${recipe.slug}`}
+          className={
+          ({ isActive }) => (
+            isActive ? 'menu-link menu-link--active' : 'menu-link'
+          )
+        }
         >
           {recipe.title}
-        </a>
+        </NavLink>
       ))}
     </nav>
   );
