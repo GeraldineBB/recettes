@@ -1,13 +1,12 @@
 import axios from 'axios';
 
 import { LOAD_RECIPES_FROM_API, setData } from '../actions/recipes';
+import { HANDLE_LOGIN } from '../actions/user';
 
 const apiMiddleWare = (store) => (next) => (action) => {
   switch (action.type) {
     case LOAD_RECIPES_FROM_API: {
       axios.get('http://localhost:3001/recipes', {
-        // email: emailValue,
-        // password: passwordValue,
       }).then(
         (response) => {
           console.log(response.data);
@@ -21,6 +20,17 @@ const apiMiddleWare = (store) => (next) => (action) => {
 
       next(action);
       break;
+    }
+    case HANDLE_LOGIN: {
+      axios.post('http://localhost:3001/login', {
+        email: emailValue,
+        password: passwordValue,
+      }).then(
+        (response) => {
+          console.log(response.data);
+          store.dispatch(setCurrentUser(response.data.username));
+        },
+      );
     }
     default:
       next(action);
