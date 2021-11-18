@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { setData } from '../actions/recipes';
+
 const apiMiddleWare = (store) => (next) => (action) => {
   switch (action.type) {
     case 'LOAD': {
@@ -10,8 +12,8 @@ const apiMiddleWare = (store) => (next) => (action) => {
         (response) => {
           console.log(response.data);
 
-          // dispatch d'une action enregistrer le pseudo
-          // store.dispatch({ type: 'SET_CURRENT_USER', value: response.data.pseudo });
+          // dispatch d'une action modifier le state avec les données de l'api
+          store.dispatch(setData(response.data));
         },
       ).catch(
         (error) => console.log('on a une erreur', error),

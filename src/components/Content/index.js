@@ -25,7 +25,6 @@ Content.propTypes = {
   recipes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      difficulty: PropTypes.string.isRequired,
     }),
   ),
 };
