@@ -19,12 +19,12 @@ import './style.scss';
 
 // == Composant
 function Recipe() {
-  const dispatch = useDispatch();
-  useEffect(
-    () => {
-      dispatch({ type: 'LOAD' });
-    },
-  );
+  // const dispatch = useDispatch();
+  // useEffect(
+  //   () => {
+  //     dispatch({ type: 'LOAD' });
+  //   },
+  // );
   // const list = useSelector((state) => state.recipes.list);
   // console.log('list recipe', list);
 

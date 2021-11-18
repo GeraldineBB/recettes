@@ -9,13 +9,13 @@ const Card = ({
   title,
   difficulty,
   slug,
-}) =>
-// const dispatch = useDispatch();
+}) => {
+  const dispatch = useDispatch();
 
-  // const handleClick = () => {
-  //   dispatch({ type: 'LOAD' });
-  // };
-  (
+  const handleClick = () => {
+    dispatch({ type: 'LOAD' });
+  };
+  return (
     <article className="card">
       <img className="card-img" src={thumbnail} alt={title} />
       <div className="card-content">
@@ -24,12 +24,13 @@ const Card = ({
         <a
           href={`/recipe/${slug}`}
           className="card-link"
-          // onClick={handleClick}
+          onClick={handleClick}
         >Voir la recette
         </a>
       </div>
     </article>
   );
+};
 Card.propTypes = {
   thumbnail: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
