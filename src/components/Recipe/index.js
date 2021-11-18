@@ -1,8 +1,8 @@
 /* eslint-disable arrow-body-style */
 // == Import : npm
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { findRecipe } from 'src/selectors/recipes';
 
@@ -19,7 +19,27 @@ import './style.scss';
 
 // == Composant
 function Recipe() {
-  const recipe = useSelector((state) => findRecipe(state.recipes.list, 'crepes-raffinees'));
+  // const dispatch = useDispatch();
+  // useEffect(
+  //   () => {
+  //     dispatch({ type: 'LOAD' });
+  //   },
+  // );
+  const list = useSelector((state) => state.recipes.list);
+  console.log('list recipe', list);
+
+  // récupération du slug
+  {
+    list.map(
+      (recipe) => {
+        console.log(recipe.slug);
+        const { slug } = recipe;
+        console.log(slug);
+      },
+    );
+  }
+
+  const recipe = useSelector((state) => findRecipe(state.recipes.list, 'pizza-margherita'));
 
   if (!recipe) {
     return <Redirect to="/error" />;
