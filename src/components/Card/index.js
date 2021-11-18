@@ -1,6 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
 
 import './style.scss';
 
@@ -9,28 +9,17 @@ const Card = ({
   title,
   difficulty,
   slug,
-}) => {
-  const dispatch = useDispatch();
+}) => (
+  <article className="card">
+    <img className="card-img" src={thumbnail} alt={title} />
+    <div className="card-content">
+      <h2 className="card-title">{title}</h2>
+      <p className="card-desc">Difficulté : {difficulty}</p>
+      <Link to={`/recipe/${slug}`} className="card-link">Voir la recette</Link>
 
-  const handleClick = () => {
-    dispatch({ type: 'LOAD' });
-  };
-  return (
-    <article className="card">
-      <img className="card-img" src={thumbnail} alt={title} />
-      <div className="card-content">
-        <h2 className="card-title">{title}</h2>
-        <p className="card-desc">Difficulté : {difficulty}</p>
-        <a
-          href={`/recipe/${slug}`}
-          className="card-link"
-          onClick={handleClick}
-        >Voir la recette
-        </a>
-      </div>
-    </article>
-  );
-};
+    </div>
+  </article>
+);
 Card.propTypes = {
   thumbnail: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

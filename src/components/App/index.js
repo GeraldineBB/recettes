@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
+import { useLocation, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import Menu from 'src/components/Menu';
@@ -20,9 +20,21 @@ function App(props) {
   const dispatch = useDispatch();
   useEffect(
     () => {
-      dispatch({ type: 'LOAD' });
+      dispatch({ type: 'LOAD_RECIPES_FROM_API' });
     },
     [],
+  );
+
+  // quand la location change, on applique un effet qui fait
+  // scroller la page en haut
+  const location = useLocation();
+
+  useEffect(
+    () => {
+      console.log('on veut scroller !');
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    },
+    [location],
   );
 
   return (

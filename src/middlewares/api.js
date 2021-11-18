@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-import { setData } from '../actions/recipes';
+import { LOAD_RECIPES_FROM_API, setData } from '../actions/recipes';
 
 const apiMiddleWare = (store) => (next) => (action) => {
   switch (action.type) {
-    case 'LOAD': {
+    case LOAD_RECIPES_FROM_API: {
       axios.get('http://localhost:3001/recipes', {
         // email: emailValue,
         // password: passwordValue,
