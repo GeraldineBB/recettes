@@ -25,21 +25,25 @@ function Recipe() {
   //     dispatch({ type: 'LOAD' });
   //   },
   // );
-  const list = useSelector((state) => state.recipes.list);
-  console.log('list recipe', list);
+  // const list = useSelector((state) => state.recipes.list);
+  // console.log('list recipe', list);
 
   // récupération du slug
-  {
+  const slug = () => {
+    const list = useSelector((state) => state.recipes.list);
+
     list.map(
       (recipe) => {
         console.log(recipe.slug);
         const { slug } = recipe;
         console.log(slug);
+        return { slug };
       },
     );
-  }
+  };
+  console.log(slug());
 
-  const recipe = useSelector((state) => findRecipe(state.recipes.list, 'pizza-margherita'));
+  const recipe = useSelector((state) => findRecipe(state.recipes.list, slug()));
 
   if (!recipe) {
     return <Redirect to="/error" />;
