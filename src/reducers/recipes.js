@@ -1,7 +1,8 @@
-import data from 'src/data';
+// import data from 'src/data';
 
+// avec test > list : data > []
 export const initialState = {
-  list: data,
+  list: [],
 };
 
 const reducer = (state = initialState, action = {}) => {
