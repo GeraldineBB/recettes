@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { LOAD_RECIPES_FROM_API, setData } from '../actions/recipes';
-import { HANDLE_LOGIN } from '../actions/user';
+import { HANDLE_LOGIN, setCurrentUser } from '../actions/user';
 
 const apiMiddleWare = (store) => (next) => (action) => {
   switch (action.type) {
@@ -22,6 +22,8 @@ const apiMiddleWare = (store) => (next) => (action) => {
       break;
     }
     case HANDLE_LOGIN: {
+      const { emailValue, passwordValue } = store.getState();
+
       axios.post('http://localhost:3001/login', {
         email: emailValue,
         password: passwordValue,
@@ -30,7 +32,12 @@ const apiMiddleWare = (store) => (next) => (action) => {
           console.log(response.data);
           store.dispatch(setCurrentUser(response.data.username));
         },
+      ).catch(
+        (error) => console.log(error),
       );
+
+      next(action);
+      break;
     }
     default:
       next(action);

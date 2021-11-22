@@ -8,13 +8,14 @@ import {setData} from 'src/actions/recipes';
 // - d'un contenu définit par une fonction
 describe ('reducers / recipes', () => {
 
+
   // on peut imbriquer les chapitres en réutilisant describe dans le callback d'un autre describe
   describe('structure', () => {
 
       test('it is a function', () => {
         expect(typeof recipesReducer).toBe('function'); 
       }); 
-  });
+    });  
 
   describe('execution', () => {
 
@@ -29,6 +30,7 @@ describe ('reducers / recipes', () => {
 
       const expectedInitialState = {
         list: [],
+        loading: true, 
       };
 
       expect(recipesReducer()).toEqual(expectedInitialState);
@@ -49,6 +51,7 @@ describe ('reducers / recipes', () => {
       // on prépare ce à quoi on s'attend
       const expectedState = {
         list : fakeRecipes, 
+        loading: false, 
       }
 
       // on vérifie que l'exécution de la fonction sur les données d'entrée
@@ -59,6 +62,8 @@ describe ('reducers / recipes', () => {
       // de vérifier que 2 objets ont la même structure et les mêmes valeurs
       expect(recipesReducer(stateBefore, setDataAction)).toEqual(expectedState); 
     });
+
+
    
   });  
   

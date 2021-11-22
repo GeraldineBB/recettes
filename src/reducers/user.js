@@ -5,6 +5,7 @@ import {
 
 export const initialState = {
   isLogged: false,
+
   emailValue: '',
   passwordValue: '',
   currentUser: null,

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Menu from 'src/components/Menu';
 import Home from 'src/components/Home';
@@ -12,12 +12,10 @@ import Loading from './Loading';
 
 import './style.scss';
 
-function App(props) {
-  if (props.loading) {
-    return <Loading />;
-  }
-
+function App() {
+  const loading = useSelector((state) => state.recipes.loading);
   const dispatch = useDispatch();
+
   useEffect(
     () => {
       dispatch({ type: 'LOAD_RECIPES_FROM_API' });
@@ -36,6 +34,10 @@ function App(props) {
     },
     [location],
   );
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="app">

@@ -14,6 +14,10 @@ const Field = ({
   onChange,
 }) => {
   const handleChange = (evt) => {
+    // on observe que la fonction reçue en props
+    // doit avoir 2 paramètres
+    // - la nouvelle valeur du champ géré par le field
+    // - le nom du champ visé (email ou password dans notre cas)
     onChange(evt.target.value, name);
   };
 
