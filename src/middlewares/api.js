@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import { LOAD_RECIPES_FROM_API, setData } from '../actions/recipes';
+import {
+  GET_FAVORITES_FROM_API, LOAD_RECIPES_FROM_API, setData, saveFavorites,
+} from '../actions/recipes';
 import { LOGIN, setCurrentUser } from '../actions/user';
 
 const apiMiddleWare = (store) => (next) => (action) => {
@@ -21,6 +23,38 @@ const apiMiddleWare = (store) => (next) => (action) => {
       next(action);
       break;
     }
+    case GET_FAVORITES_FROM_API: {
+      // const state = store.getState;
+      // const { user } = state;
+      // const { token } = user;
+      // on pourrait faire { token } = store.getState().user
+      // ou alors :
+      const { user: { token } } = store.getState();
+
+      axios
+        .get('http://localhost:3001/favorites', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(
+          (response) => {
+            console.log(response.data.favorites);
+            // les favoris ne sont pas dans le state encore !!
+            // il faut justement qu'on les mette dans le state
+            // donc il faut un payload
+            const { favorites } = response.data;
+            store.dispatch(saveFavorites(favorites));
+          },
+        ).catch(
+          (error) => {
+            console.log(error);
+          },
+        );
+      next(action);
+      break;
+    }
+
     case LOGIN: {
       // on a besoin de l'email et password pour transmettre à l'api
       // attention les info sont dans un sous state, on extrait d'abord le state et ensuite les props du state

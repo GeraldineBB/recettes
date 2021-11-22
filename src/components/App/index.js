@@ -8,6 +8,8 @@ import Home from 'src/components/Home';
 import Recipe from 'src/components/Recipe';
 import Error from 'src/components/Error';
 
+import Favorites from '../Favorites';
+
 import Loading from './Loading';
 
 import './style.scss';
@@ -54,6 +56,7 @@ function App() {
       <Routes>
         <Route path="*" element={<Error />} />
         <Route path="/" element={<Home />} />
+        <Route path="/favorites" element={<Favorites />} />
         <Route path="/recipe/:slug" element={<Recipe />} />
       </Routes>
     </div>

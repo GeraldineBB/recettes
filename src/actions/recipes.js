@@ -11,3 +11,17 @@ export const loadRecipesFromAPI = () => ({
   type: LOAD_RECIPES_FROM_API,
 
 });
+
+export const GET_FAVORITES_FROM_API = 'GET_FAVORITES_FROM_API';
+
+export const getFavoritesFromAPI = () => ({
+  type: GET_FAVORITES_FROM_API,
+
+});
+
+export const SAVE_FAVORITES = 'SAVE_FAVORITES';
+
+export const saveFavorites = (favorites) => ({
+  type: SAVE_FAVORITES,
+  favorites,
+});

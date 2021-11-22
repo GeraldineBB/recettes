@@ -7,6 +7,8 @@ import './style.scss';
 
 const Menu = () => {
   const recipes = useSelector((state) => state.recipes.list);
+  const logged = useSelector((state) => state.user.logged);
+
   return (
     <nav className="menu">
       <NavLink
@@ -22,6 +24,23 @@ const Menu = () => {
       >
         Accueil
       </NavLink>
+
+      {logged
+        && (
+        <NavLink
+          to="/favorites"
+          className={
+            // on peut passer à className (ou à style)
+            // un callback qui prend en paramère isActive (le lien est il actif ou pas)
+            // et qui doit retourner la classe (restectivement le style) ) appliquer
+            ({ isActive }) => (
+              isActive ? 'menu-link menu-link--active' : 'menu-link'
+            )
+          }
+        >
+          Mes favoris
+        </NavLink>
+        )}
 
       {recipes.map((recipe) => (
         <NavLink

@@ -13,3 +13,12 @@ export function findRecipe(recipes, searchedSlug) {
   });
   return recipe;
 }
+
+export function getTitleByNumberOfRecipes(recipes) {
+  if (recipes?.length === 1) {
+    return 'Découvrez notre meilleure recette !';
+  } if (recipes?.length > 1) {
+    return `Découvrez nos ${recipes.length} recettes !`;
+  }
+  return 'Aucune recette pour le moment...';
+}
