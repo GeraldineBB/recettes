@@ -5,9 +5,9 @@ import {
 
 export const initialState = {
   isLogged: false,
-
-  emailValue: '',
-  passwordValue: '',
+  // on prépare deux emplacements dans le state pour stocker l'email et le mdp
+  email: 'test',
+  password: 'pwd',
   currentUser: null,
 };
 
