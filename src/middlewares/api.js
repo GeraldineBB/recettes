@@ -31,6 +31,9 @@ const apiMiddleWare = (store) => (next) => (action) => {
       // ou alors :
       const { user: { token } } = store.getState();
 
+      // quand on souhiate accéder à une route protégée par un token
+      // on transmet ce token dans l'entête de la requête HTTP
+      // pour tout le reste, on fait la même chose
       axios
         .get('http://localhost:3001/favorites', {
           headers: {
