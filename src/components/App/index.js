@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation, Route, Routes } from 'react-router-dom';
+import {
+  useLocation, Route, Routes, Navigate,
+} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Menu from 'src/components/Menu';
@@ -16,6 +18,8 @@ import './style.scss';
 
 function App() {
   const loading = useSelector((state) => state.recipes.loading);
+  const logged = useSelector((state) => state.user.logged);
+
   const dispatch = useDispatch();
 
   useEffect(
@@ -56,7 +60,12 @@ function App() {
       <Routes>
         <Route path="*" element={<Error />} />
         <Route path="/" element={<Home />} />
-        <Route path="/favorites" element={<Favorites />} />
+        {
+          logged && <Route path="/favorites" element={<Favorites />} />
+        }
+        {
+          !logged && <Route path="/favorites" element={<Navigate replace to="/" />} />
+        }
         <Route path="/recipe/:slug" element={<Recipe />} />
       </Routes>
     </div>

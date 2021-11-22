@@ -1,5 +1,5 @@
 // import data from 'src/data';
-import { SAVE_FAVORITES } from '../actions/recipes';
+import { SAVE_FAVORITES, SET_DATA } from '../actions/recipes';
 
 // avec test > list : data > []
 export const initialState = {
@@ -12,7 +12,7 @@ export const initialState = {
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case 'SET_DATA':
+    case SET_DATA:
       return {
         ...state,
         list: action.value,

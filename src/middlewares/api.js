@@ -3,12 +3,16 @@ import axios from 'axios';
 import {
   GET_FAVORITES_FROM_API, LOAD_RECIPES_FROM_API, setData, saveFavorites,
 } from '../actions/recipes';
-import { LOGIN, setCurrentUser } from '../actions/user';
+import { LOGIN, LOGOUT, setCurrentUser } from '../actions/user';
+
+const api = axios.create({
+  baseURL: 'http://localhost:3001',
+});
 
 const apiMiddleWare = (store) => (next) => (action) => {
   switch (action.type) {
     case LOAD_RECIPES_FROM_API: {
-      axios.get('http://localhost:3001/recipes', {
+      api.get('/recipes', {
       }).then(
         (response) => {
           console.log(response.data);
@@ -24,28 +28,25 @@ const apiMiddleWare = (store) => (next) => (action) => {
       break;
     }
     case GET_FAVORITES_FROM_API: {
-      // const state = store.getState;
-      // const { user } = state;
-      // const { token } = user;
-      // on pourrait faire { token } = store.getState().user
-      // ou alors :
+      /*
+      const state = store.getState();
+      const { user } = state;
+      const { token } = user;
+      en plus court :
+      */
       const { user: { token } } = store.getState();
 
-      // quand on souhiate accéder à une route protégée par un token
-      // on transmet ce token dans l'entête de la requête HTTP
-      // pour tout le reste, on fait la même chose
-      axios
-        .get('http://localhost:3001/favorites', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+      // quand on souhaite accéder à une route "protégée" par un token
+      // on transmet ce token dans l'entete de la requete HTTP
+      api
+        .get('/favorites', /* , {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      } */)
         .then(
           (response) => {
             console.log(response.data.favorites);
-            // les favoris ne sont pas dans le state encore !!
-            // il faut justement qu'on les mette dans le state
-            // donc il faut un payload
             const { favorites } = response.data;
             store.dispatch(saveFavorites(favorites));
           },
@@ -66,7 +67,7 @@ const apiMiddleWare = (store) => (next) => (action) => {
       const { user } = state;
       const { email, password } = user;
 
-      axios.post('http://localhost:3001/login', {
+      api.post('/login', {
         email: email,
         password: password,
       }).then(
@@ -75,6 +76,9 @@ const apiMiddleWare = (store) => (next) => (action) => {
           const userFromApi = response.data;
           // on a besoin d'un payload : met à jour le user, oui mais comment ?
           store.dispatch(setCurrentUser(userFromApi));
+
+          // on mémorise le token dans l'instance axios
+          api.defaults.headers.common.Authorization = `Bearer ${userFromApi.token}`;
         },
       ).catch(
         () => console.log('erreur'),
@@ -83,6 +87,11 @@ const apiMiddleWare = (store) => (next) => (action) => {
       next(action);
       break;
     }
+    case LOGOUT:
+      // au logout, on supprime le token de notre instance axios
+      delete api.defaults.headers.common.Authorization;
+      next(action);
+      break;
     default:
       next(action);
   }
