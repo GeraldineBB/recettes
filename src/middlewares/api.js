@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { LOAD_RECIPES_FROM_API, setData } from '../actions/recipes';
-import { HANDLE_LOGIN, setCurrentUser } from '../actions/user';
+import { LOGIN, setCurrentUser } from '../actions/user';
 
 const apiMiddleWare = (store) => (next) => (action) => {
   switch (action.type) {
@@ -21,19 +21,26 @@ const apiMiddleWare = (store) => (next) => (action) => {
       next(action);
       break;
     }
-    case HANDLE_LOGIN: {
-      const { emailValue, passwordValue } = store.getState();
+    case LOGIN: {
+      // on a besoin de l'email et password pour transmettre à l'api
+      // attention les info sont dans un sous state, on extrait d'abord le state et ensuite les props du state
+
+      const state = store.getState();
+      const { user } = state;
+      const { email, password } = user;
 
       axios.post('http://localhost:3001/login', {
-        email: emailValue,
-        password: passwordValue,
+        email: email,
+        password: password,
       }).then(
         (response) => {
           console.log(response.data);
-          store.dispatch(setCurrentUser(response.data.username));
+          const userFromApi = response.data;
+          // on a besoin d'un payload : met à jour le user, oui mais comment ?
+          store.dispatch(setCurrentUser(userFromApi));
         },
       ).catch(
-        (error) => console.log(error),
+        () => console.log('erreur'),
       );
 
       next(action);

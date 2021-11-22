@@ -11,6 +11,7 @@ const Field = ({
   type,
   name,
   placeholder,
+  // attention !! ici le onChange correspond à changeField des composants parents
   onChange,
 }) => {
   const handleChange = (evt) => {

@@ -1,32 +1,23 @@
-export const CHANGE_FIELD = 'CHANGE_FIELD';
+export const CHANGE_USER_FIELD = 'CHANGE_USER_FIELD';
 
-export const changeField = (name, value) => ({
-  type: CHANGE_FIELD,
-  name,
-  value,
-});
-
-export const HANDLE_LOGIN = 'HANDLE_LOGIN';
-
-export const handleLogin = () => ({
-  type: HANDLE_LOGIN,
-
-});
-
-export const HANDLE_LOGOUT = 'HANDLE_LOGOUT';
-
-export const handleLogout = () => ({
-  type: HANDLE_LOGOUT,
-
-});
-
-// onChange ??
-export const ON_CHANGE = 'ON_CHANGE';
-
-export const onChange = (value, name) => ({
-  type: ON_CHANGE,
+export const changeUserField = (value, name) => ({
+  type: CHANGE_USER_FIELD,
   value,
   name,
+});
+
+export const LOGIN = 'LOGIN';
+
+export const login = () => ({
+  type: LOGIN,
+
+});
+
+export const LOGOUT = 'LOGOUT';
+
+export const logout = () => ({
+  type: LOGOUT,
+
 });
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
